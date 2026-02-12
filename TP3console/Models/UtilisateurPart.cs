@@ -10,7 +10,7 @@ namespace TP3console.Models.EntityFramework
     {
         public override string ToString()
         {
-            return $"id : {Idutilisateur}";
+            return $"id : {Idutilisateur} / Login : {Login}";
         }
     }
 }

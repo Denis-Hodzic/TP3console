@@ -67,7 +67,8 @@ namespace TP3console
             }
 
             //Exo2Q1();
-            Exo2Q2();
+            //Exo2Q2();
+            Exo2Q3();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -102,6 +103,11 @@ namespace TP3console
         public static void Exo2Q3()
         {
             var ctx = new FilmsDbContext();
+            var users = ctx.Utilisateurs.OrderBy(u => u.Login).ToList();
+            foreach (var utilisateur in users) 
+            { 
+                Console.WriteLine(utilisateur.ToString());
+            }
         }
     }
 }
