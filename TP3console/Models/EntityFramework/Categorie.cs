@@ -11,6 +11,8 @@ namespace TP3console.Models.EntityFramework;
 public partial class Categorie
 {
     private ILazyLoader _lazyLoader;
+    private ICollection<Film>? films;
+
     public Categorie(ILazyLoader lazyLoader)
     {
         _lazyLoader = lazyLoader;
@@ -30,7 +32,7 @@ public partial class Categorie
     //[InverseProperty("IdcategorieNavigation")]
     //public virtual ICollection<Film> Films { get; set; } = new List<Film>();
 
-    [InverseProperty("IdcategorieNavigation")]
+    [InverseProperty(nameof(Film.IdcategorieNavigation))]
     public virtual ICollection<Film> Films
     {
         get

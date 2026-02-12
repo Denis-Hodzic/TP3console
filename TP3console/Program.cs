@@ -53,6 +53,18 @@ namespace TP3console
                 .ThenInclude(f => f.Avis)
                 .First(c => c.Nom == "Action");
 
+
+
+                //Chargement de la catégorie Action
+                Categorie categorieAction1 = ctx.Categories.First(c => c.Nom == "Action");
+                Console.WriteLine("Categorie : " + categorieAction1.Nom);
+                Console.WriteLine("Films : ");
+                //Chargement des films de la catégorie Action.
+                foreach (var film in categorieAction1.Films) // lazy loading initiated
+                {
+                    Console.WriteLine(film.Nom);
+                }
+
             }
         }
     }
