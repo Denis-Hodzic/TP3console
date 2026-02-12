@@ -109,6 +109,16 @@ namespace TP3console
                 Console.WriteLine(utilisateur.ToString());
             }
         }
+
+        public static void Exo2Q4()
+        {
+            var ctx = new FilmsDbContext();
+            var Films = ctx.Films.Select(f => f.Nom + f.Idfilm).Join(ctx.Categories, f => f.Idcategorie, c => c.Idcategorie, (f, c) => new { NomFilm = f.Nom, NomCategorie = c.Nom }).ToList();
+            foreach (var film in Films)
+            {
+                Console.WriteLine(film.ToString());
+            }
+        }
     }
 }
 
