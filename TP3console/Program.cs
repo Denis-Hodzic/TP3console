@@ -73,7 +73,8 @@ namespace TP3console
             //Exo2Q5();
             Console.WriteLine("--------------------------");
             //Exo2Q6();
-            Exo2Q7();
+            //Exo2Q7();
+
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -167,6 +168,12 @@ namespace TP3console
                 count++;
             }
             Console.WriteLine($"Nombre de film qui commence avec 'Le' : {count}");
+        }
+
+        public static void Exo2Q8()
+        {
+            var ctx = new FilmsDbContext();
+            var noteMoyenne = ctx.Films.Join(ctx.Avis, f => f.Idfilm, a=> a.Idfilm,  ;
         }
     }
 }
