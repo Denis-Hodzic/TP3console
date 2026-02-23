@@ -74,7 +74,8 @@ namespace TP3console
             Console.WriteLine("--------------------------");
             //Exo2Q6();
             //Exo2Q7();
-            Exo2Q8();
+            //Exo2Q8();
+            //Exo2Q9();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -175,6 +176,24 @@ namespace TP3console
             var ctx = new FilmsDbContext();
             var noteMoyenne = ctx.Avis.Where(a=>a.IdfilmNavigation.Nom.ToLower()=="pulp fiction").Average(a => a.Note);
             Console.WriteLine($"La note moyenne de Pulp Fiction : {Math.Round(noteMoyenne,2)}");
+        }
+
+        public static void Exo2Q9()
+        {
+            var ctx = new FilmsDbContext();
+
+            var bestUser = ctx.Avis
+                .OrderByDescending(a => a.Note)
+                .Select(a => a.IdutilisateurNavigation) // ou a.IdutilisateurNavigation.Login
+                .FirstOrDefault();
+
+            if (bestUser == null)
+            {
+                Console.WriteLine("Aucun avis en base.");
+                return;
+            }
+
+            Console.WriteLine(bestUser); // ou Console.WriteLine(bestUser.Login);
         }
     }
 }
