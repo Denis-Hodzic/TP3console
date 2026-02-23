@@ -74,7 +74,7 @@ namespace TP3console
             Console.WriteLine("--------------------------");
             //Exo2Q6();
             //Exo2Q7();
-
+            Exo2Q8();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -173,7 +173,8 @@ namespace TP3console
         public static void Exo2Q8()
         {
             var ctx = new FilmsDbContext();
-            var noteMoyenne = ctx.Films.Join(ctx.Avis, f => f.Idfilm, a=> a.Idfilm,  ;
+            var noteMoyenne = ctx.Avis.Where(a=>a.IdfilmNavigation.Nom.ToLower()=="pulp fiction").Average(a => a.Note);
+            Console.WriteLine($"La note moyenne de Pulp Fiction : {Math.Round(noteMoyenne,2)}");
         }
     }
 }
