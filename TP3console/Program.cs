@@ -76,6 +76,8 @@ namespace TP3console
             //Exo2Q7();
             //Exo2Q8();
             //Exo2Q9();
+            //ExoAjoutUtilisateur();
+            ExoAjouterAvis();
             Console.ReadKey();
 
 
@@ -312,6 +314,50 @@ namespace TP3console
 
             Console.WriteLine("Avis ajouté.");
         }
+
+        public static void ExoAjouter2FilmsDrame()
+        {
+            using var ctx = new FilmsDbContext();
+
+            // 1) récupérer la catégorie Drame
+            var catDrame = ctx.Categories
+                .FirstOrDefault(c => c.Nom.ToLower() == "drame");
+
+            if (catDrame == null)
+            {
+                Console.WriteLine("Catégorie Drame introuvable.");
+                return;
+            }
+
+            // 2) création des films
+            var film1 = new Film
+            {
+                Nom = "Film Drame 1",
+                Description = "Description film drame 1",
+                Idcategorie = catDrame.Idcategorie
+            };
+
+            var film2 = new Film
+            {
+                Nom = "Film Drame 2",
+                Description = "Description film drame 2",
+                Idcategorie = catDrame.Idcategorie
+            };
+
+            // 3) ajout en batch
+            ctx.Films.AddRange(film1, film2);
+
+            // 4) sauvegarde
+            ctx.SaveChanges();
+
+            Console.WriteLine("2 films ajoutés dans la catégorie Drame.");
+        }
+
+        public static void Com()
+        {
+            Console.WriteLine("ALTER TABLE film ENABLE TRIGGER ALL;\r\n\r\nSELECT pg_catalog.setval(\r\n    pg_get_serial_sequence('film', 'idfilm'),\r\n    MAX(idfilm)\r\n) FROM film;");
+        }
+
 
     }
 }
