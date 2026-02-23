@@ -114,10 +114,24 @@ namespace TP3console
         public static void Exo2Q4()
         {
             var ctx = new FilmsDbContext();
-            var Films = ctx.Films.Select(f => f.Nom + f.Idfilm).Join(ctx.Categories, ctx.Films.Select(f=>f.Idcategorie), c => c.Idcategorie, (f, c) => new { NomFilm = , NomCategorie = c.Nom }).ToList();
-            foreach (var film in Films)
+
+            var films = ctx.Films
+                .Join(
+                    ctx.Categories,
+                    f => f.Idcategorie,
+                    c => c.Idcategorie,
+                    (f, c) => new
+                    {
+                        NomFilm = f.Nom,
+                        IdFilm = f.Idfilm,
+                        NomCategorie = c.Nom
+                    }
+                )
+                .ToList();
+
+            foreach (var film in films)
             {
-                Console.WriteLine(film.ToString());
+                Console.WriteLine($"Film : {film.NomFilm} | IdFilm : {film.IdFilm}| Catégorie : {film.NomCategorie}");
             }
         }
     }
