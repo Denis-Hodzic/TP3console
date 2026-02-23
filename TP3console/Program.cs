@@ -70,7 +70,9 @@ namespace TP3console
             //Exo2Q2();
             //Exo2Q3();
             //Exo2Q4();
-            Exo2Q5();
+            //Exo2Q5();
+            Console.WriteLine("--------------------------");
+            Exo2Q6();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -106,8 +108,8 @@ namespace TP3console
         {
             var ctx = new FilmsDbContext();
             var users = ctx.Utilisateurs.OrderBy(u => u.Login).ToList();
-            foreach (var utilisateur in users) 
-            { 
+            foreach (var utilisateur in users)
+            {
                 Console.WriteLine(utilisateur.ToString());
             }
         }
@@ -142,6 +144,13 @@ namespace TP3console
             var NbCategorie = ctx.Categories
                 .Count();
             Console.WriteLine($"Nombre de categorie : {NbCategorie}");
+        }
+
+        public static void Exo2Q6()
+        {
+            var ctx = new FilmsDbContext();
+            var basseNoteAvis = ctx.Avis.Min(a => a.Note);
+            Console.WriteLine($"La note la plus basse : {basseNoteAvis}");
         }
     }
 }

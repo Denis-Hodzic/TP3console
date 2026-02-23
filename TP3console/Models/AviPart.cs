@@ -26,7 +26,7 @@ namespace TP3console.Models.EntityFramework
 
         public override string ToString()
         {
-            return $"Note : {Note} and Commentaire : {Commentaire}";
+            return $"Note : {Note}";
         }
     }
 }
