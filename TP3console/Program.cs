@@ -77,6 +77,8 @@ namespace TP3console
             //Exo2Q8();
             //Exo2Q9();
             Console.ReadKey();
+
+
         }
         public static void Exo2Q1()
         {
@@ -195,6 +197,122 @@ namespace TP3console
 
             Console.WriteLine(bestUser); // ou Console.WriteLine(bestUser.Login);
         }
+
+        public static void ExoAjoutUtilisateur()
+        {
+            var ctx = new FilmsDbContext();
+
+            // 1) Création + init
+            var moi = new Utilisateur
+            {
+                Email = "moi@mail.com",
+                Login = "moi",
+                Pwd = "mdp" // si vous stockez en clair dans le TP (sinon hash)
+            };
+
+            // 2) Ajout au contexte (via la collection)
+            ctx.Utilisateurs.Add(moi);
+
+            // 3) Sauvegarde
+            ctx.SaveChanges();
+
+            Console.WriteLine($"Utilisateur ajouté : id={moi.Idutilisateur} login={moi.Login}");
+        }
+
+        public static void ExoModifierFilm()
+        {
+            var ctx = new FilmsDbContext();
+
+            // Récupérer le film (case-insensitive)
+            var film = ctx.Films
+                .FirstOrDefault(f => f.Nom.ToLower() == "l'armee des douze singes");
+
+            if (film == null)
+            {
+                Console.WriteLine("Film introuvable.");
+                return;
+            }
+
+            // Récupérer la catégorie "Drame"
+            var catDrame = ctx.Categories
+                .FirstOrDefault(c => c.Nom.ToLower() == "drame");
+
+            if (catDrame == null)
+            {
+                Console.WriteLine("Catégorie 'Drame' introuvable.");
+                return;
+            }
+
+            // Modifs demandées
+            film.Description = "Votre description ici (rajout TP).";
+            film.Idcategorie = catDrame.Idcategorie;
+
+            ctx.SaveChanges();
+
+            Console.WriteLine("Film modifié (description + catégorie Drame).");
+        }
+
+        public static void ExoSupprimerFilm()
+        {
+            var ctx = new FilmsDbContext();
+
+            var film = ctx.Films
+                .FirstOrDefault(f => f.Nom.ToLower() == "l'armee des douze singes");
+
+            if (film == null)
+            {
+                Console.WriteLine("Film introuvable.");
+                return;
+            }
+
+            // 1) Supprimer les avis liés (FK sans cascade)
+            var avisDuFilm = ctx.Avis.Where(a => a.Idfilm == film.Idfilm);
+            ctx.Avis.RemoveRange(avisDuFilm);
+
+            // 2) Supprimer le film
+            ctx.Films.Remove(film);
+
+            // 3) Sauvegarde
+            ctx.SaveChanges();
+
+            Console.WriteLine("Film + avis associés supprimés.");
+        }
+
+        public static void ExoAjouterAvis()
+        {
+            var ctx = new FilmsDbContext();
+
+            // Récupérer "moi" (adapte le login)
+            var moi = ctx.Utilisateurs.FirstOrDefault(u => u.Login.ToLower() == "moi");
+            if (moi == null)
+            {
+                Console.WriteLine("Utilisateur 'moi' introuvable. Ajoute-toi d'abord.");
+                return;
+            }
+
+            // Récupérer le film (adapte le nom)
+            var film = ctx.Films.FirstOrDefault(f => f.Nom.ToLower() == "pulp fiction");
+            if (film == null)
+            {
+                Console.WriteLine("Film introuvable.");
+                return;
+            }
+
+            // Créer l'avis
+            var avis = new Avi // ou Avis selon ton nom de classe
+            {
+                Idfilm = film.Idfilm,
+                Idutilisateur = moi.Idutilisateur,
+                Note = 5 // adapte l’échelle (ex 0..5 / 0..10)
+                         // Commentaire = "Incroyable." // si ton modèle a un champ texte
+            };
+
+            ctx.Avis.Add(avis);
+            ctx.SaveChanges();
+
+            Console.WriteLine("Avis ajouté.");
+        }
+
     }
 }
 
