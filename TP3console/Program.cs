@@ -69,7 +69,8 @@ namespace TP3console
             //Exo2Q1();
             //Exo2Q2();
             //Exo2Q3();
-            Exo2Q4();
+            //Exo2Q4();
+            Exo2Q5();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -133,6 +134,14 @@ namespace TP3console
             {
                 Console.WriteLine($"Film : {film.NomFilm} | IdFilm : {film.IdFilm}| Catégorie : {film.NomCategorie}");
             }
+        }
+
+        public static void Exo2Q5()
+        {
+            var ctx = new FilmsDbContext();
+            var NbCategorie = ctx.Categories
+                .Count();
+            Console.WriteLine($"Nombre de categorie : {NbCategorie}");
         }
     }
 }
