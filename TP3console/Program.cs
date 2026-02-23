@@ -72,7 +72,8 @@ namespace TP3console
             //Exo2Q4();
             //Exo2Q5();
             Console.WriteLine("--------------------------");
-            Exo2Q6();
+            //Exo2Q6();
+            Exo2Q7();
             Console.ReadKey();
         }
         public static void Exo2Q1()
@@ -151,6 +152,21 @@ namespace TP3console
             var ctx = new FilmsDbContext();
             var basseNoteAvis = ctx.Avis.Min(a => a.Note);
             Console.WriteLine($"La note la plus basse : {basseNoteAvis}");
+        }
+
+        public static void Exo2Q7()
+        {
+            var ctx = new FilmsDbContext();
+            var count = 0;
+            var filtreFilms = ctx.Films
+                .Where(f => f.Nom.StartsWith("Le"))
+                .ToList();
+            foreach (var film in filtreFilms)
+            {
+                Console.WriteLine($"Film qui commence avec 'Le' : {film.Nom}");
+                count++;
+            }
+            Console.WriteLine($"Nombre de film qui commence avec 'Le' : {count}");
         }
     }
 }
